@@ -54,17 +54,20 @@ namespace LBTGTAVMods
                 return;
             }
 
+            // RANDOM
+            Random random = new Random();
+
             for (int i = 0; i < 20; i++)
             {
-                // PREPARE LOCATION
-                var distance = new Random().NextDouble() * 40;
+                // PREPARE
+                var distance = random.NextDouble() * 40;
                 var position = Game.Player.Character.Position.Around((float)distance);
 
                 // CREATE NPC
                 var npc = World.CreatePed(PedHash.AviSchwartzman, position);
 
                 // GIVE WEAPON
-                if (new Random().NextDouble() < 0.5)
+                if (random.NextDouble() < 0.5)
                     npc.Weapons.Give(WeaponHash.FlareGun, 1, true, true);
                 else
                     npc.Weapons.Give(WeaponHash.Firework, 1, true, true);

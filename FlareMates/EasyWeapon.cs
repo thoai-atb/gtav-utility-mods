@@ -40,6 +40,19 @@ namespace LBTGTAVMods
         private void BuyAmmo()
         {
             WriteDebug("BuyAmmo");
+            try
+            {
+                Weapon current = Game.Player.Character.Weapons.Current;
+                int before = current.Ammo;
+                current.Ammo += 5 * current.MaxAmmoInClip;
+                int gain = (current.Ammo - before) / current.MaxAmmoInClip;
+                // Game.Player.Money += 1;
+                Game.Player.Money -= gain;
+            }
+            catch (Exception)
+            {
+                WriteDebug("Can't Buy Ammo");
+            }
         }
 
         private void ToggleSuppressor()
