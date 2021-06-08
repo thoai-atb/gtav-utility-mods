@@ -44,7 +44,17 @@ namespace LBTGTAVMods
 
         private void ToggleSuppressor()
         {
-            WriteDebug("Toggle Suppressor");
+            WriteDebug("Toggling Suppressor");
+            try
+            {
+                Weapon current = Game.Player.Character.Weapons.Current;
+                bool pre = current.Components.GetSuppressorComponent().Active;
+                current.Components.GetSuppressorComponent().Active = !pre;
+            }
+            catch (Exception)
+            {
+                WriteDebug("Can't Toggle");
+            }
         }
     }
 }
