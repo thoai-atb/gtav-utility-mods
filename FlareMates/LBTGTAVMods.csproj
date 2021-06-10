@@ -47,6 +47,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EnhancedScript.cs" />
+    <Compile Include="EasyHealth.cs" />
     <Compile Include="EasyWeapon.cs" />
     <Compile Include="FlareMates.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

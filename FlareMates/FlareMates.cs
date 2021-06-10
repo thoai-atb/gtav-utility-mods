@@ -7,31 +7,22 @@ using System.IO;
 
 namespace LBTGTAVMods
 {
-    public class FlareMates : Script
+    public class FlareMates : EnhancedScript
     {
         private readonly List<Ped> flareMen = new List<Ped>();
-        private readonly string _logPath = "scripts/FlareMates.log";
         private readonly State _state = new State(3000);
 
-        public FlareMates()
+        public FlareMates() : base("FlareMates")
         {
             // EVENTS
             Tick += OnTick;
             KeyDown += OnKeyDown;
             _state.StateEnded += new State.StateEndedEventHandler(ClearParty);
-
-            // START LOG FILE
-            File.WriteAllText(_logPath, "script started ... \n");
         }
 
         ~FlareMates()
         {
             ClearParty();
-        }
-
-        private void WriteDebug(string text)
-        {
-            File.AppendAllText(_logPath, text + "\n");
         }
 
         private void OnTick(object sender, EventArgs e)

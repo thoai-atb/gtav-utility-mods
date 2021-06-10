@@ -10,14 +10,11 @@ using System.IO;
 
 namespace LBTGTAVMods
 {
-    public class EasyWeapon : Script
+    class EasyWeapon : EnhancedScript
     {
-        private readonly string _logPath = "scripts/EasyWeapon.log";
-
-        public EasyWeapon()
+        public EasyWeapon() : base("EasyWeapon")
         {
             KeyDown += OnKeyDown;
-            File.WriteAllText(_logPath, "script started ... \n");
         }
 
         public void OnKeyDown(object sender, KeyEventArgs e)
@@ -30,11 +27,6 @@ namespace LBTGTAVMods
             {
                 ToggleSuppressor();
             }
-        }
-
-        public void WriteDebug(string text)
-        {
-            File.AppendAllText(_logPath, text + "\n");
         }
 
         private void BuyAmmo()
