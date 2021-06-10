@@ -91,9 +91,9 @@ namespace LBTGTAVMods
                 }
                 catch (Exception ex)
                 {
-                    WriteDebug(ex.Message);
-                    WriteDebug(ex.Source);
-                    WriteDebug(ex.StackTrace);
+                    WriteLog(ex.Message);
+                    WriteLog(ex.Source);
+                    WriteLog(ex.StackTrace);
                 }
             }
             flareMen.Clear();

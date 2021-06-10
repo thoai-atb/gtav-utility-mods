@@ -31,7 +31,7 @@ namespace LBTGTAVMods
 
         private void BuyAmmo()
         {
-            WriteDebug("BuyAmmo");
+            WriteLog("BuyAmmo");
             try
             {
                 Weapon current = Game.Player.Character.Weapons.Current;
@@ -43,13 +43,13 @@ namespace LBTGTAVMods
             }
             catch (Exception)
             {
-                WriteDebug("Can't Buy Ammo");
+                WriteLog("Can't Buy Ammo");
             }
         }
 
         private void ToggleSuppressor()
         {
-            WriteDebug("Toggling Suppressor");
+            WriteLog("Toggling Suppressor");
             try
             {
                 Weapon current = Game.Player.Character.Weapons.Current;
@@ -58,7 +58,7 @@ namespace LBTGTAVMods
             }
             catch (Exception)
             {
-                WriteDebug("Can't Toggle");
+                WriteLog("Can't Toggle");
             }
         }
     }

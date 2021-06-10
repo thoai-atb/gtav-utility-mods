@@ -14,10 +14,13 @@ namespace LBTGTAVMods
 
         public EnhancedScript(string scriptName)
         {
-            _logPath = "scripts/" + scriptName + ".log";
+            _logPath = "scripts/LBTGTAVMods.log/";
+            if (!Directory.Exists(_logPath))
+                Directory.CreateDirectory(_logPath);
+            _logPath += scriptName + ".log";
             File.WriteAllText(_logPath, "Script Started ... \n");
         }
-        public void WriteDebug(string text)
+        public void WriteLog(string text)
         {
             File.AppendAllText(_logPath, text + "\n");
         }
