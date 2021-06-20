@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="QuickCheats.cs" />
     <Compile Include="EasyWanted.cs" />
     <Compile Include="EnhancedScript.cs" />
     <Compile Include="EasyHealth.cs" />

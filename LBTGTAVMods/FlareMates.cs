@@ -11,6 +11,7 @@ namespace LBTGTAVMods
     {
         private readonly List<Ped> flareMen = new List<Ped>();
         private readonly State _state = new State(3000);
+        private readonly Random _random = new Random();
 
         public FlareMates() : base("FlareMates")
         {
@@ -18,11 +19,6 @@ namespace LBTGTAVMods
             Tick += OnTick;
             KeyDown += OnKeyDown;
             _state.StateEnded += new State.StateEndedEventHandler(ClearParty);
-        }
-
-        ~FlareMates()
-        {
-            ClearParty();
         }
 
         private void OnTick(object sender, EventArgs e)
@@ -45,20 +41,18 @@ namespace LBTGTAVMods
                 return;
             }
 
-            // RANDOM
-            Random random = new Random();
 
             for (int i = 0; i < 20; i++)
             {
                 // PREPARE
-                var distance = random.NextDouble() * 40;
+                var distance = _random.NextDouble() * 40;
                 var position = Game.Player.Character.Position.Around((float)distance);
 
                 // CREATE NPC
                 var npc = World.CreatePed(PedHash.AviSchwartzman, position);
 
                 // GIVE WEAPON
-                if (random.NextDouble() < 0.5)
+                if (_random.NextDouble() < 0.8)
                     npc.Weapons.Give(WeaponHash.FlareGun, 1, true, true);
                 else
                     npc.Weapons.Give(WeaponHash.Firework, 1, true, true);
@@ -78,16 +72,16 @@ namespace LBTGTAVMods
 
         private void ClearParty()
         {
-            foreach (Ped p in flareMen)
+            foreach (Ped npc in flareMen)
             {
                 try
                 {
-                    // PLAY EFFECT
+                    // EFFECT
                     var asset = new ParticleEffectAsset("core");
-                    World.CreateParticleEffectNonLooped(asset, "exp_air_molotov_lod", p.Position);
+                    World.CreateParticleEffectNonLooped(asset, "exp_air_molotov_lod", npc.Position);
 
-                    // DELETE
-                    p.Delete();
+                    // Mark ignore
+                    npc.Delete();
                 }
                 catch (Exception ex)
                 {
