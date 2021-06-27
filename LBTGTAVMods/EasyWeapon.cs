@@ -27,6 +27,17 @@ namespace LBTGTAVMods
             {
                 ToggleSuppressor();
             }
+            else if(e.KeyCode == Keys.Divide)
+            {
+                ToggleThermalVision();
+            }
+            else if(e.KeyCode == Keys.Tab)
+            {
+                if (Game.Player.Character.CurrentVehicle != null)
+                {
+                    Game.Player.Character.Weapons.Select(WeaponHash.Unarmed);
+                }
+            }
         }
 
         private void BuyAmmo()
@@ -60,6 +71,11 @@ namespace LBTGTAVMods
             {
                 WriteLog("Can't Toggle");
             }
+        }
+
+        private void ToggleThermalVision()
+        {
+            Game.IsThermalVisionActive = !Game.IsThermalVisionActive;
         }
     }
 }
