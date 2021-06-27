@@ -41,6 +41,9 @@ namespace LBTGTAVMods
             WriteLog("Teleporting...");
 
             Ped targetPed = GetRandomPed();
+            if (targetPed == null)
+                return;
+
             var pos1 = targetPed.Position;
             var pos2 = Game.Player.Character.Position;
             var vehicle1 = targetPed.CurrentVehicle;
@@ -75,7 +78,9 @@ namespace LBTGTAVMods
                     continue;
                 filtered.Add(p);
             }
-            int randomIdx = (int)(filtered.Count * _random.NextDouble());
+            if (filtered.Count == 0)
+                return null;
+            int randomIdx = _random.Next(filtered.Count);
             return filtered[randomIdx];
         }
     }
