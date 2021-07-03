@@ -56,7 +56,7 @@ namespace LBTGTAVMods
             {
                 Game.Player.Character.RemoveHelmet(false);
             }
-            if (Game.WasCheatStringJustEntered("vehicle"))
+            if (Game.WasCheatStringJustEntered("unbox"))
             {
                 SpawnRandomVehicle();
             }
@@ -79,6 +79,15 @@ namespace LBTGTAVMods
             Array allHashes = Enum.GetValues(typeof(VehicleHash));
             VehicleHash type = (VehicleHash)allHashes.GetValue(random.Next(allHashes.Length));
             var vehicle = World.CreateVehicle(type, Game.Player.Character.Position.Around(5));
+            var particleScale = vehicle.FrontPosition.DistanceTo(vehicle.RearPosition);
+            var asset = new ParticleEffectAsset("cut_paletoscore");
+            var effectName = "scr_paleto_banknotes";
+            World.CreateParticleEffectNonLooped(asset, effectName, vehicle.FrontPosition, scale: particleScale);
+            World.CreateParticleEffectNonLooped(asset, effectName, vehicle.RearPosition, scale: particleScale);
+            World.CreateParticleEffectNonLooped(asset, effectName, vehicle.LeftPosition, scale: particleScale);
+            World.CreateParticleEffectNonLooped(asset, effectName, vehicle.RightPosition, scale: particleScale);
+            World.CreateParticleEffectNonLooped(asset, effectName, vehicle.AbovePosition, scale: particleScale);
+            World.CreateParticleEffectNonLooped(asset, effectName, vehicle.BelowPosition, scale: particleScale);
             vehicle.MarkAsNoLongerNeeded();
             Game.Player.Money -= 1000;
         }
