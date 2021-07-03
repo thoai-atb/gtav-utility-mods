@@ -15,6 +15,15 @@ namespace LBTGTAVMods
         public EasyWeapon() : base("EasyWeapon")
         {
             KeyDown += OnKeyDown;
+            Tick += OnTick;
+        }
+
+        public void OnTick(object sender, EventArgs e)
+        {
+            if (Game.WasCheatStringJustEntered("givethrows"))
+                GiveThrowables();
+            if (Game.WasCheatStringJustEntered("flash"))
+                ToggleFlashLight();
         }
 
         public void OnKeyDown(object sender, KeyEventArgs e)
@@ -49,7 +58,6 @@ namespace LBTGTAVMods
                 int before = current.Ammo;
                 current.Ammo += 5 * current.MaxAmmoInClip;
                 int gain = (current.Ammo - before) / current.MaxAmmoInClip;
-                // Game.Player.Money += 1;
                 Game.Player.Money -= gain;
             }
             catch (Exception)
@@ -73,9 +81,42 @@ namespace LBTGTAVMods
             }
         }
 
+        private void ToggleFlashLight()
+        {
+            WriteLog("Toggling FlashLight");
+            try
+            {
+                Weapon current = Game.Player.Character.Weapons.Current;
+                bool pre = current.Components.GetFlashLightComponent().Active;
+                current.Components.GetFlashLightComponent().Active = !pre;
+            }
+            catch (Exception)
+            {
+                WriteLog("Can't Toggle");
+            }
+        }
+
         private void ToggleThermalVision()
         {
             Game.IsThermalVisionActive = !Game.IsThermalVisionActive;
+        }
+
+        private void GiveThrowables()
+        {
+            WeaponCollection tools = Game.Player.Character.Weapons;
+            WeaponHash[] throwables = new WeaponHash[]
+            {
+                WeaponHash.Grenade,
+                WeaponHash.SmokeGrenade,
+                WeaponHash.Molotov,
+                WeaponHash.ProximityMine
+            };
+
+            foreach (var weaponHash in throwables)
+            {
+                Weapon weapon = tools.Give(weaponHash, 1, false, false);
+                weapon.Ammo = weapon.MaxAmmo;
+            }
         }
     }
 }

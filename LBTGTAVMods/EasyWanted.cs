@@ -60,6 +60,7 @@ namespace LBTGTAVMods
             string effectName = "exp_grd_grenade_lod";
             World.CreateParticleEffectNonLooped(asset, effectName, pos1, scale: 1.5f);
             World.CreateParticleEffectNonLooped(asset, effectName, pos2, scale: 1.5f);
+            Game.Player.Money -= 100;
         }
 
         public Ped GetRandomPed()

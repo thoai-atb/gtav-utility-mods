@@ -19,7 +19,7 @@ namespace LBTGTAVMods
 
         public void OnTick(object sender, EventArgs e)
         {
-            if (Game.WasCheatStringJustEntered("ineedcash"))
+            if (Game.WasCheatStringJustEntered("gimmecash"))
                 Game.Player.Money += 100000;
             if (Game.WasCheatStringJustEntered("armor"))
                 Game.Player.Character.Armor = 200;
@@ -27,6 +27,18 @@ namespace LBTGTAVMods
                 Game.Player.Character.Weapons.Give(WeaponHash.Molotov, 25, true, true);
             if (Game.WasCheatStringJustEntered("para"))
                 Game.Player.Character.Weapons.Give(WeaponHash.Parachute, 1, true, true);
+            if (Game.WasCheatStringJustEntered("populate"))
+                Populate();
+        }
+
+        public void Populate()
+        {
+            var pos = Game.Player.Character.Position;
+            for(int i = 0; i<20; i++)
+            {
+                var ped = World.CreateRandomPed(pos.Around(10));
+                ped.MarkAsNoLongerNeeded();
+            }
         }
     }
 }

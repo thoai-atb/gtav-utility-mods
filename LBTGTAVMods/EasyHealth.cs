@@ -26,7 +26,7 @@ namespace LBTGTAVMods
                 Game.Player.Character.Health++;
             }
 
-            if(_random.NextDouble() < _healingPerTick && Game.Player.Character.Armor > 0)
+            if(_random.NextDouble() < _healingPerTick) // && Game.Player.Character.Armor > 0)
             {
                 Game.Player.Character.Armor++;
             }

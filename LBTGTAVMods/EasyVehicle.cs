@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using GTA;
 using GTA.Math;
 
@@ -15,9 +16,19 @@ namespace LBTGTAVMods
         public EasyVehicle () : base("EasyVehicle")
         {
             Tick += OnTick;
+            KeyDown += OnKeyDown;
         }
 
         public void OnTick(object sender, EventArgs e)
+        {
+            CheckCheats();
+        }
+
+        public void OnKeyDown(object sender, KeyEventArgs e)
+        {
+        }
+
+        public void CheckCheats()
         {
             if (Game.WasCheatStringJustEntered("ride"))
             {
@@ -45,13 +56,9 @@ namespace LBTGTAVMods
             {
                 Game.Player.Character.RemoveHelmet(false);
             }
-            if (Game.WasCheatStringJustEntered("wonder"))
+            if (Game.WasCheatStringJustEntered("vehicle"))
             {
-                // Game.Player.Character.Money -= 100; -> This line doesn't work
-                Array allHashes = Enum.GetValues(typeof(VehicleHash));
-                VehicleHash type = (VehicleHash)allHashes.GetValue(random.Next(allHashes.Length));
-                var vehicle = World.CreateVehicle(type, Game.Player.Character.Position.Around(5));
-                vehicle.MarkAsNoLongerNeeded();
+                SpawnRandomVehicle();
             }
             if (Game.WasCheatStringJustEntered("drive"))
             {
@@ -64,6 +71,31 @@ namespace LBTGTAVMods
                         p.Task.EnterVehicle(vehicle, VehicleSeat.Driver);
                     }
                 }
+            }
+        }
+
+        public void SpawnRandomVehicle()
+        {
+            Array allHashes = Enum.GetValues(typeof(VehicleHash));
+            VehicleHash type = (VehicleHash)allHashes.GetValue(random.Next(allHashes.Length));
+            var vehicle = World.CreateVehicle(type, Game.Player.Character.Position.Around(5));
+            vehicle.MarkAsNoLongerNeeded();
+            Game.Player.Money -= 1000;
+        }
+
+        public void Lucid()
+        {
+            var curV = Game.Player.Character.CurrentVehicle;
+            var pos = Game.Player.Character.Position;
+            var direction = Game.Player.Character.Heading;
+            Vehicle vehicle = World.CreateVehicle(VehicleHash.Oppressor2, pos, direction);
+            Game.Player.Character.SetIntoVehicle(vehicle, VehicleSeat.Driver);
+            vehicle.IsRadioEnabled = false;
+            vehicle.MarkAsNoLongerNeeded();
+            if (curV != null)
+            {
+                curV.PetrolTankHealth = -1;
+                curV.Position = curV.GetOffsetPosition(new Vector3(0, 0, -1));
             }
         }
     }
