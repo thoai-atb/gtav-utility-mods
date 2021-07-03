@@ -30,7 +30,7 @@ namespace LBTGTAVMods
 
         public void OnTick(object sender, EventArgs e)
         {
-            if (Game.WasCheatStringJustEntered("pop"))
+            if (Game.WasCheatStringJustEntered("shift"))
             {
                 Teleport();
             }
@@ -61,6 +61,7 @@ namespace LBTGTAVMods
             World.CreateParticleEffectNonLooped(asset, effectName, pos1, scale: 1.5f);
             World.CreateParticleEffectNonLooped(asset, effectName, pos2, scale: 1.5f);
             Game.Player.Money -= 100;
+            World.CurrentTimeOfDay = new TimeSpan(_random.Next(24), 0, 0);
         }
 
         public Ped GetRandomPed()

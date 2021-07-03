@@ -29,6 +29,10 @@ namespace LBTGTAVMods
                 Game.Player.Character.Weapons.Give(WeaponHash.Parachute, 1, true, true);
             if (Game.WasCheatStringJustEntered("populate"))
                 Populate();
+            if (Game.WasCheatStringJustEntered("night"))
+                World.CurrentTimeOfDay = new TimeSpan(0, 0, 0);
+            if (Game.WasCheatStringJustEntered("noon"))
+                World.CurrentTimeOfDay = new TimeSpan(12, 0, 0);
         }
 
         public void Populate()
