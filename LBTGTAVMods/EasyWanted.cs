@@ -21,7 +21,7 @@ namespace LBTGTAVMods
 
         public void OnKeyDown(object sender, KeyEventArgs e)
         {
-            if(e.KeyCode == Keys.Multiply && Game.Player.WantedLevel > 0)
+            if(e.KeyCode == Keys.Multiply && Game.Player.WantedLevel > 0 && Game.Player.WantedLevel < 3)
             {
                 Game.Player.Money -= Game.Player.WantedLevel * 10;
                 Game.Player.WantedLevel = 0;
@@ -60,8 +60,9 @@ namespace LBTGTAVMods
             string effectName = "exp_grd_grenade_lod";
             World.CreateParticleEffectNonLooped(asset, effectName, pos1, scale: 1.5f);
             World.CreateParticleEffectNonLooped(asset, effectName, pos2, scale: 1.5f);
-            Game.Player.Money -= 100;
-            World.CurrentTimeOfDay = new TimeSpan(_random.Next(24), 0, 0);
+            Game.Player.Money -= 1000;
+            World.CurrentTimeOfDay = new TimeSpan(_random.Next(24), _random.Next(60), _random.Next(60));
+            Game.Player.WantedLevel = 0;
         }
 
         public Ped GetRandomPed()

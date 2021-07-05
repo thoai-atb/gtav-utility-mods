@@ -43,6 +43,7 @@ namespace LBTGTAVMods
                 if (Game.Player.Character.CurrentVehicle != null)
                 {
                     Game.Player.Character.CurrentVehicle.Repair();
+                    Game.Player.Money -= 100;
                 }
             }
             if (Game.WasCheatStringJustEntered("off"))
@@ -59,6 +60,7 @@ namespace LBTGTAVMods
             if (Game.WasCheatStringJustEntered("unbox"))
             {
                 SpawnRandomVehicle();
+                Game.Player.Money -= 1000;
             }
             if (Game.WasCheatStringJustEntered("drive"))
             {
@@ -90,7 +92,6 @@ namespace LBTGTAVMods
             World.CreateParticleEffectNonLooped(asset, effectName, vehicle.BelowPosition, scale: particleScale);
             World.CreateParticleEffectNonLooped(asset, effectName, vehicle.Position, scale: particleScale);
             vehicle.MarkAsNoLongerNeeded();
-            Game.Player.Money -= 1000;
         }
 
         public void Lucid()
